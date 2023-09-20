@@ -45,7 +45,19 @@ document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' })
  },500)
 
 }
-
+useHead({
+  title: 'Lutzival | 16.11—19.11.23',
+  meta: [
+    { name: 'description', content: 'Lutzival | 16.11—19.11.23' }
+  ],
+})
+useSeoMeta({
+  title: 'Lutzival | 16.11—19.11.23',
+  ogTitle: 'Lutzival | 16.11—19.11.23',
+  description: 'Various Locations, Berlin.',
+  ogDescription: 'Various Locations, Berlin.',
+  ogImage: './banner.jpg',
+})
 </script>
 
 <template>
