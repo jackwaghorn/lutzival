@@ -123,7 +123,7 @@ useSeoMeta({
                         fill="#D9D9D9" />
                     <path d="M928.662 -3.05176e-05V332H984.162V373H874.162V-3.05176e-05H928.662Z" fill="#D9D9D9" />
                 </svg>
-                <img @click="openGallery" class="sticker transition absolute top-0 right-0 w-[15%] h-auto"
+                <img @click="openGallery" class="sticker transition absolute top-0 right-0 w-[15%] h-auto z-50"
                     src="~/assets/lutz_sticker.png" alt="">
 
             </div>
