@@ -37,32 +37,69 @@ function open(index: any) {
         document.getElementById('event-' + index)?.scrollIntoView({ behavior: 'smooth' });
     }, 800)
 }
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 const showGallery = ref(false);
 function openGallery() {
- showGallery.value = true;
- setTimeout(() => {
-document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' })
- },500)
 
+    const array = document.querySelectorAll('.gallery-img');
+const images = Array.from(array);
+
+// Shuffle the array
+shuffleArray(images);
+
+ 
+
+
+
+    const container = document.getElementById('gallery-wrapper');
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+
+    document.body.style.overflow = 'hidden';
+
+    for (var i = 0; i < images.length; i++) {
+        (function (i) {
+            setTimeout(function () {
+                let imgWidth = images[i].offsetWidth;
+                let imgHeight = images[i].offsetHeight;
+
+                // Calculate random positions within the container
+                let maxX = containerWidth - imgWidth;
+                let maxY = containerHeight - imgHeight;
+                let newLeft = Math.random() * maxX;
+                let newTop = Math.random() * maxY;
+
+                images[i].style.left = newLeft + 'px';
+                images[i].style.top = newTop + 'px';
+                images[i].style.opacity = '1';
+                images[i].style.zIndex = '10' + i;
+            }, 1000 * i);
+        })(i);
+    }
 }
+
 useHead({
-  title: 'Lutzival | 16.11—19.11.23',
-  meta: [
-    { name: 'description', content: 'Lutzival | 16.11—19.11.23' }
-  ],
+    title: 'Lutzival | 16.11—19.11.23',
+    meta: [
+        { name: 'description', content: 'Lutzival | 16.11—19.11.23' }
+    ],
 })
 useSeoMeta({
-  title: 'Lutzival | 16.11—19.11.23',
-  ogTitle: 'Lutzival | 16.11—19.11.23',
-  description: 'Various Locations, Berlin.',
-  ogDescription: 'Various Locations, Berlin.',
-  ogImage: './banner.jpg',
+    title: 'Lutzival | 16.11—19.11.23',
+    ogTitle: 'Lutzival | 16.11—19.11.23',
+    description: 'Various Locations, Berlin.',
+    ogDescription: 'Various Locations, Berlin.',
+    ogImage: './banner.jpg',
 })
 </script>
 
 <template>
-
-    <SwiperGallery v-show="showGallery" :gallery="page?.data.gallery" />
     <main class="h-full w-full">
         <!-- Header -->
         <section class="w-full flex flex-col items-center justify-center p-3">
@@ -86,11 +123,25 @@ useSeoMeta({
                         fill="#D9D9D9" />
                     <path d="M928.662 -3.05176e-05V332H984.162V373H874.162V-3.05176e-05H928.662Z" fill="#D9D9D9" />
                 </svg>
-                <img @click="openGallery" class="z-20 sticker transition absolute top-0 right-0 w-[15%] h-auto"
+                <img @click="openGallery" class="sticker transition absolute top-0 right-0 w-[15%] h-auto"
                     src="~/assets/lutz_sticker.png" alt="">
 
             </div>
-       
+            <!-- Gallery -->
+            <section id="gallery-wrapper"
+                class="fixed top-0 bottom-0 left-0 right-0 w-full height-0 select-none pointer-events-none z-10">
+                <div class="relative h-full w-full pointer-events-none">
+
+
+                    <img v-for="(image, index) in page?.data.gallery" :srcset="`
+                    ${image.image.url}&w=600&fit=crop 1280w,
+                                                                                ${image.image.url}&w=5&fit=crop 1024w,
+                                                                                ${image.image.url}&w=400&fit=crop 768w,
+                             `" :src="`${image.image.url}?w=200&fit=crop`" sizes="(min-width: 768w) 33.3vw, 100vw"
+                        class="w-2/3 md:w-1/3 absolute gallery-img pointer-events-none drop-shadow-lg" alt="">
+                </div>
+            </section>
+
             <!-- Subheader -->
             <div class="w-full pb-20">
                 <h2 class="text-secondary text-center ">
@@ -168,6 +219,13 @@ useSeoMeta({
 .sticker {
     filter: drop-shadow(5px 5px 5px #222);
 }
+
+
+.gallery-img {
+    opacity: 0;
+    transform-origin: 0 0;
+}
+
 
 .overlay-img {
     position: absolute;
