@@ -163,7 +163,7 @@ useSeoMeta({
         <!-- Content -->
         <section>
             <div :id="'event-' + index" @click="open(index)" v-for="(event, index) in page?.data.events" :key="index"
-                :style="'background-color: rgba(217, 217, 217,' + (index + 1) / 10 + '1)'" class="hover:cursor-pointer">
+                :style="'background-color: rgba(217, 217, 217,' + (index + 1) / 20 + '1)'" class="hover:cursor-pointer">
                 <div class="p-5">
                     <!-- header -->
                     <div class="py-10 text-center">
